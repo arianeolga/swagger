@@ -1,0 +1,145 @@
+openapi: 3.0.3
+info:
+  title: API de consultorio
+  description: API para controlar médicos e suas especialidades dentro do consultório
+  version: 0.0.1
+  termsOfService: https://mockapi.io/
+  contact:
+    name: Suporte a Devs
+    email: contato@example.com
+    url: https://mockapi.io/
+  license:
+    name: 'Licença: GPLv3'
+    url: https://www.gnu.org/licenses/quick-guide-gplv3.pt-br.html
+externalDocs:
+  description: Documentação burocratica
+  url: https://mockapi.io/
+servers:
+  - url: https://65ad6268adbd5aa31be0b0c3.mockapi.io/
+    description: API de Teste
+paths:
+  /especialidades:
+    get:
+      summary: Recuper todas as especialidades
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Especialidade'
+    post:
+      summary: Cria uma especialidade
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                descricao:
+                  type: string
+      responses:
+        '201':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  descricao:
+                    type: string
+  /especialidades/{id}:
+    get:
+      summary: Recuper uma entidade pelo ID
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Especialidade'
+        '404':
+          description: Especialidade não encontrada
+          content:
+            application/json:
+              example: Not Found
+    put:
+      summary: Altera uma entidade pelo ID
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                descricao:
+                  type: string
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Especialidade'
+        '404':
+          description: Especialidade não encontrada
+          content:
+            application/json:
+              example: Not Found
+    delete:
+      summary: Remove uma entidade pelo ID
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Especialidade'
+        '404':
+          description: Especialidade não encontrada
+          content:
+            application/json:
+              example: Not Found
+security:
+  - auth: []
+components:
+  schemas:
+    Especialidade:
+      type: object
+      properties:
+        id:
+          type: integer
+        descricao:
+          type: string
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
